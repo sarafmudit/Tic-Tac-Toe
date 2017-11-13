@@ -1,0 +1,144 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="ttt.css"/>
+		<script type="text/javascript">
+
+
+		var painted;
+		var content;
+		var winningCombinations;
+		var turn = 0;
+		var theCanvas;
+		var c;
+		var cxt;
+		var squaresFilled = 0;
+		var w;
+		var y;
+
+
+		window.onload=function(){
+
+			filled = new Array();
+			content = new Array();
+			winningCombinations = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+
+			for(var i = 0; i <= 8; i++){
+			filled[i] = false;
+			content[i]='';
+			}
+		}
+
+
+		function canvasClicked(canvasNumber){
+			theCanvas =canvasNumber;
+			c = document.getElementById(theCanvas);
+			cxt = c.getContext("2d");
+
+			if(filled[canvasNumber-1] ==false){
+				if(turn%2==0){
+					drawX();
+					content[canvasNumber-1] = 'X';
+				}
+
+				else{
+					drawO();
+					content[canvasNumber-1] = 'O';
+				}
+
+				turn++;
+				filled[canvasNumber-1] = true;
+				squaresFilled++;
+				check(content[canvasNumber-1]);
+
+				if(squaresFilled==9){
+					alert("THE GAME IS OVER!");
+					location.reload(true);
+				}
+
+			}
+			else{
+				alert("THAT SPACE IS ALREADY OCCUPIED");
+			}
+
+		}
+		function drawX(){
+			cxt.beginPath();
+			cxt.moveTo(10,10);
+			cxt.lineTo(90,90);
+			cxt.moveTo(90,10);
+			cxt.lineTo(10,90);
+			cxt.stroke();
+			cxt.closePath();
+		}
+		function drawO(){
+			cxt.beginPath();
+			cxt.arc(50,50,40,0,Math.PI*2,true);
+			cxt.stroke();
+			cxt.closePath();
+		}
+
+		function check(symbol){
+
+			for(var a = 0; a < winningCombinations.length; a++){
+			if(content[winningCombinations[a][0]]==symbol&&content[winningCombinations[a][1]]==	symbol&&content[winningCombinations[a][2]]==symbol){
+				alert(symbol+ " WON!");
+				playAgain();
+			}
+			}
+
+		}
+
+		function playAgain(){
+			y=confirm("PLAY AGAIN?");
+			if(y==true){
+				alert("OKAY!");
+				location.reload(true);
+			}
+			else{
+				alert("BYE");
+		}
+
+		}
+
+		function About() {
+		    document.getElementById("about").innerHTML = "Tic-tac-toe (also known as Noughts and crosses or Xs and Os) is a paper-and-pencil game for two players, X and O, who take turns marking the spaces in a 3×3 grid. The player who succeeds in placing three of their marks in a horizontal, vertical, or diagonal row wins the game.";
+		}
+		</script>
+	</head>
+	<body>
+		<header>
+			<h1> Tic - Tac - Toe!</h1>>
+
+		</header>
+		<div id ="box">
+
+			<canvas id = "1"  width="100" height="100" style="border:1px solid black" onclick="canvasClicked(1)"></canvas>
+			<canvas id = "2"  width="100" height="100" style="border:1px solid black" onclick="canvasClicked(2)"></canvas>
+			<canvas id = "3"  width="100" height="100" style="border:1px solid black" onclick="canvasClicked(3)"></canvas><br/>
+			<canvas id = "4"  width="100" height="100" style="border:1px solid black" onclick="canvasClicked(4)"></canvas>
+			<canvas id = "5"  width="100" height="100" style="border:1px solid black" onclick="canvasClicked(5)"></canvas>
+			<canvas id = "6"  width="100" height="100" style="border:1px solid black" onclick="canvasClicked(6)"></canvas><br/>
+			<canvas id = "7"  width="100" height="100" style="border:1px solid black" onclick="canvasClicked(7)"></canvas>
+			<canvas id = "8"  width="100" height="100" style="border:1px solid black" onclick="canvasClicked(8)"></canvas>
+			<canvas id = "9"  width="100" height="100" style="border:1px solid black" onclick="canvasClicked(9)"></canvas>
+
+		</div>
+		<aside >
+			<form  action="#" method="post">
+				<textarea name="feedback" rows="7" cols="30">Feedback requested</textarea><br>
+				<input type="submit" name="submit">
+			</form>
+
+		</aside>
+		<div class="about">
+			<button onclick="About()">About the Game</button>
+
+<p id="about"></p>
+
+		</div>
+		<footer>
+			By<br>Mudit Saraf<br>13BCE0733<br>IWP Project-Web App Game<br>Slot: E1  Prof. Parveen Sultana<br>
+		</footer>
+	</body>
+</html>
